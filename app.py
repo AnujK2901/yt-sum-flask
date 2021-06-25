@@ -4,7 +4,7 @@ from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, Vide
 from youtube_transcript_api.formatters import TextFormatter
 
 # Flask Imports
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 
 # Gensim Imports
 from gensim.summarization.summarizer import summarize
@@ -30,6 +30,7 @@ from sumy.utils import get_stop_words
 # Other Imports
 from string import punctuation
 from heapq import nlargest
+import os
 
 # Waitress Import for Serving at Heroku
 from waitress import serve
@@ -38,6 +39,20 @@ from waitress import serve
 def create_app():
     # Creating Flask Object and returning it.
     app = Flask(__name__)
+
+    # "Punkt" download before nltk tokenization
+    try:
+        nltk.data.find('tokenizers/punkt')
+    except LookupError:
+        print('Downloading punkt')
+        nltk.download('punkt', quiet=True)
+
+    # "Wordnet" download before nltk tokenization
+    try:
+        nltk.data.find('corpora/wordnet')
+    except LookupError:
+        print('Downloading wordnet')
+        nltk.download('wordnet')
 
     # Processing Function for below route.
     @app.route('/summarize/')
@@ -134,6 +149,19 @@ def create_app():
             return jsonify(success=False,
                            message="No Choice given in request. " "Please request along with your choice correctly.",
                            response=None), 400
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
+                                   mimetype='image/vnd.microsoft.icon')
+
+    @app.route('/')
+    def root_function():
+        return jsonify(success=False,
+                       message="You have currently requested at endpoint '/', "
+                               "Summarization API is at '/summarize/' endpoint. "
+                               "Please request correctly with your query parameters at '/summarize/' endpoint. ",
+                       response=None), 400
 
     return app
 
@@ -340,20 +368,6 @@ def sumy_text_rank_summarize(text_content, percent):
 
 
 if __name__ == '__main__':
-    # "Punkt" download before nltk tokenization
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        print('Downloading punkt')
-        nltk.download('punkt', quiet=True)
-
-    # "Wordnet" download before nltk tokenization
-    try:
-        nltk.data.find('corpora/wordnet')
-    except LookupError:
-        print('Downloading wordnet')
-        nltk.download('wordnet')
-
     # Running Flask Application
     # app.run()
     flask_app = create_app()
