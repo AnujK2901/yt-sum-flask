@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Add POPUP.CSS to this HTML file.-->
+    <link rel="stylesheet" href="/web.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Add title to this HTML file.-->
+    <title>YouTube Summarizer Web</title>
+    <!-- Adding Roboto Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet"
+          type="text/css">
+</head>
+<body>
+<!--YouTube Logo Fetching From Online-->
+<img src="/static/yt_icon_rgb.svg" height="64" width="64" alt="YouTube Icon">
+<!--Titles-->
+<h1 style="font-family: 'Roboto Thin', sans-serif;">YouTube Summarizer</h1>
+<h2 style="font-family: 'Roboto Thin', sans-serif;">Get Summarization Done<br>Directly with our API.</h2>
+<!--Info Message to go to summarize or web endpoint-->
+<h5>If you would like to request our API directly, use GET method for URL <span
+        style="font-family: 'Roboto Thin', sans-serif;">https://ytsum.herokuapp.com/summarize/</span> with arguments in
+    following manner:
+</h5>
+<h3 style="font-family: 'Roboto Thin', sans-serif;">
+    <b>https://ytsum.herokuapp.com/summarize/?id=&#60;your-video-id&#62;&percent=&#60;your-percent&#62;&choice=&#60;your-summary-choice&#62;</b>
+</h3>
+<!--Help for the API-->
+<h5>Read about finding YouTube ID here : <a
+        href=" https://help.tcgplayer.com/hc/en-us/articles/115008106868-Finding-Your-YouTube-Video-ID">Link 1</a> <a
+        href="https://gist.github.com/jakebellacera/d81bbf12b99448188f183141e6696817">Link 2</a>
+    <br>
+    Summary Choices are: <b style="font-family: 'Roboto Thin', sans-serif;">["gensim-sum", "spacy-sum", "nltk-sum",
+        "sumy-lsa-sum", "sumy-luhn-sum",
+        "sumy-text-rank-sum"]</b>
+    <br>
+    Percentage could be of your choice, but optimal summaries are within 20 to 30 percent.
+</h5>
+You are requested to go <a href="/web/">here</a> to access online web summarizer.
+</body>
+</html>
