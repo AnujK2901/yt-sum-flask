@@ -16,8 +16,8 @@ summarize_button.disabled = true;
 // Adding EventListeners on both dropdowns to enable button when both dropdowns have selected a valid choice.
 percent_dropdown.addEventListener("click", buttonUpdate);
 choice_dropdown.addEventListener("click", buttonUpdate);
-percent_dropdown.addEventListener("onmousedown", buttonUpdate);
-choice_dropdown.addEventListener("onmousedown", buttonUpdate);
+percent_dropdown.addEventListener("change", buttonUpdate);
+choice_dropdown.addEventListener("change", buttonUpdate);
 percent_dropdown.addEventListener("keyup", buttonUpdate);
 choice_dropdown.addEventListener("keyup", buttonUpdate);
 url_input.addEventListener("input", buttonUpdate);
