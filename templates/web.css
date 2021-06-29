@@ -16,6 +16,7 @@ body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
     background-color: #f1f1f1;
+    display: table-cell;
     vertical-align: middle;
 }
 
