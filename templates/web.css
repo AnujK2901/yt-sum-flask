@@ -1,0 +1,79 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    padding: 20px;
+    display: table;
+    margin: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    background-color: #f1f1f1;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.button {
+    border: 1px solid #c10000;
+    background-color: #ff0000;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration-color: white;
+    text-decoration-style: solid;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.button:hover {
+    border: 1px solid #c10000;
+    background-color: #c10000;
+    color: white;
+}
+
+.button:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.custom-select {
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    text-align: center;
+    width: 100%;
+}
+
+select {
+    width: 90%;
+}
+
+
+label{
+    font-size: 13px;
+}
+
+input{
+    width: 90%;
+}
+
+#text-out {
+    margin: 10px auto;
+    font-size: 14px;
+    color: #282828;
+}
+
+.dropdown-text {
+    font-size: 14px;
+}

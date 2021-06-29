@@ -4,13 +4,15 @@ from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, Vide
 from youtube_transcript_api.formatters import TextFormatter
 
 # Flask Imports
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, render_template
 
 # NLTK Imports
 import nltk
 
+# Other Imports
 import os
 
+# Summarizer Import (Our Another File: summarizer.py)
 from summarizer import gensim_summarize, spacy_summarize, nltk_summarize, sumy_lsa_summarize, sumy_luhn_summarize, \
     sumy_text_rank_summarize
 
@@ -44,7 +46,7 @@ def create_app():
         nltk.download("stopwords", quiet=True)
 
     # Processing Function for below route.
-    @app.route('/summarize/')
+    @app.route('/summarize/', methods=['GET'])
     def transcript_fetched_query():
         # Getting argument from the request
         video_id = request.args.get('id')  # video_id of the YouTube Video
@@ -144,17 +146,38 @@ def create_app():
                            response=None), 400
 
     @app.route('/favicon.ico')
+    # Favicon is stored in static folder, browsers request it to display along with tab title.
     def favicon():
         return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
                                    mimetype='image/vnd.microsoft.icon')
 
     @app.route('/')
     def root_function():
-        return jsonify(success=False,
-                       message="You have currently requested at endpoint '/', "
-                               "Summarization API is at '/summarize/' endpoint. "
-                               "Please request correctly with your query parameters at '/summarize/' endpoint. ",
-                       response=None), 400
+        # Since we have two end points inside root, we are closing root endpoint.
+        # Displaying root.html to the end user
+        return render_template('root.html')
+
+    @app.route('/web/')
+    def summarizer_web():
+        # We are at web.html, online input boxes are there to summarize the given video URL.
+        # Displaying web.html to the end user
+        return render_template('web.html')
+
+    @app.route("/web.css")
+    def styles_root_route():
+        # web.css is stored in templates folder, browsers request it for use inside html page.
+        return send_from_directory(os.path.join(app.root_path, 'templates'), "web.css")
+
+    @app.route("/web.js")
+    def popup_route():
+        # web.js is stored in templates folder, browsers request it for use inside html page.
+        return send_from_directory(os.path.join(app.root_path, 'templates'), "web.js")
+
+    @app.route("/web/yt_icon_rgb.svg")
+    def yt_icon_route():
+        # yt_icon_rgb.svg is stored in static folder, browsers request it for use inside html page.
+        # This SVG Image contains YouTube Logo.
+        return send_from_directory(os.path.join(app.root_path, 'static'), "yt_icon_rgb.svg")
 
     return app
 

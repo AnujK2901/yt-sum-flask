@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Add POPUP.CSS to this HTML file.-->
+    <link rel="stylesheet" href="/web.css">
+    <!--Add title to this HTML file.-->
+    <title>YouTube Summarizer Web</title>
+    <!-- Adding Roboto Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+</head>
+<body>
+<!--YouTube Logo Fetching From Online-->
+<img src="/static/yt_icon_rgb.svg" height="64" width="64" alt="YouTube Icon">
+<!--Titles-->
+<h1 style="font-family: 'Roboto Thin', sans-serif;">YouTube Summarizer</h1>
+<h3 style="font-family: 'Roboto Thin', sans-serif;">Get Summarization Done<br>Directly within your browser.</h3>
+<!--YouTube Div: Only Visible when it is YouTube URL-->
+<div id="youtube">
+    <input type="text" id="url_input" placeholder="YouTube Video URL">
+    <br>
+    <label for="url_input">Type YouTube Video URL here</label>
+
+    <!--Summary Choice Selection Dropdown-->
+    <div class="custom-select">
+        <select id="summary-dropdown">
+            <option class="dropdown-text" value="0">Summary Algorithm</option>
+            <option class="dropdown-text" value="1">Text Rank Algorithm Based (Gensim)</option>
+            <option class="dropdown-text" value="2">Frequency Based (NLTK)</option>
+            <option class="dropdown-text" value="3">Frequency Based (Spacy)</option>
+            <option class="dropdown-text" value="4">Latent Semantic Analysis Based (Sumy)</option>
+            <option class="dropdown-text" value="5">Luhn Algorithm Based (Sumy)</option>
+            <option class="dropdown-text" value="6">Text Rank Algorithm Based (Sumy)</option>
+        </select>
+        <br>
+        <label for="summary-dropdown">Choose Your Summarization Algorithm.<br>Tip: Use Text Rank Algorithm(Gensim)
+            if you don't know about these techniques.</label>
+    </div>
+    <!--Percent Selection Dropdown-->
+    <div class="custom-select" style="margin-top: -5px;">
+        <select id="percent-dropdown">
+            <option class="dropdown-text" value="0">Summary %</option>
+            <option class="dropdown-text" value="1">10%</option>
+            <option class="dropdown-text" value="2">20%</option>
+            <option class="dropdown-text" value="3">30%</option>
+            <option class="dropdown-text" value="4">40%</option>
+            <option class="dropdown-text" value="5">50%</option>
+            <option class="dropdown-text" value="6">60%</option>
+            <option class="dropdown-text" value="7">70%</option>
+        </select>
+        <br>
+        <label for="percent-dropdown">Select a percentage. (Tip: Select 20 or 30)<br>Summary will be presented in
+            approx. X% lines of the available transcript.</label>
+    </div>
+    <!--Button for Making Summarization Request-->
+    <button class="button" style="margin-top: -5px;" id="my_button"><b>Summarize</b></button>
+</div>
+<!--Text Div: Summary Status and Response-->
+<div id="text_out_main" style="display: none;">
+    <h4 id="current_process">Generating Summary</h4>
+    <div id="text-out">Please Wait</div>
+</div>
+
+<script src="/web.js"></script>
+</body>
+</html>
