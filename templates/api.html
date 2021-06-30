@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto:wght@300;400&display=swap"
           rel="stylesheet">
     <!--Add web.css to this HTML file.-->
-    <link rel="stylesheet" href="/web.css">
+    <link rel="stylesheet" href="/static/web.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Add title to this HTML file.-->
     <title>YouTube Summarizer Web</title>
@@ -18,26 +18,27 @@
 <img src="/static/yt_icon_rgb.svg" height="64" width="64" alt="YouTube Icon">
 <!--Titles-->
 <h1 style="font-weight: 300;">YouTube Summarizer</h1>
-<h2 style="font-family: 'Open Sans', sans-serif; font-weight: 300;">Get Summarization Done<br>Directly with our API.
-</h2>
+<h3 style="font-family: 'Open Sans', sans-serif; font-weight: 300;">Get Summarization Done<br>Directly with our API.
+</h3>
 <!--Info Message to go to summarize or web endpoint-->
-<h5>If you would like to request our API directly, use GET method for URL <span
-        style="font-weight: 300;">https://ytsum.herokuapp.com/summarize/</span> with
-    arguments in
-    following manner:
+<h5 style="font-weight: 400; line-height: 1.6">If you would like to try our API directly, request
+    our URL <u>https://ytsum.herokuapp.com/summarize/</u> with GET
+    Method.<br>The accepted arguments are <span style="font-weight: 300;"><b>[id, percent, choice]</b></span>
+    only as depicted in following dummy URL:
 </h5>
 <h3 style="font-family: 'Open Sans', sans-serif; font-weight: 300;">
-    https://ytsum.herokuapp.com/summarize/?id=&#60;your-video-id&#62;&percent=&#60;your-percent&#62;&choice=&#60;your-summary-choice&#62;
-</h3><br>
+    https://ytsum.herokuapp.com/summarize/?id=<span style="font-weight: 400;"><b>your-video-id</b></span>&percent=<span
+        style="font-weight: 400;"><b>your-percent</b></span>&choice=<span style="font-weight: 400;"><b>your-summary-choice</b></span>
+</h3>
 <!--Help for the API-->
-<h4><u>More Help</u></h4>
-<h5>Read about how you can find your YouTube video ID here : <a
-        href=" https://help.tcgplayer.com/hc/en-us/articles/115008106868-Finding-Your-YouTube-Video-ID">Link 1</a> <a
-        href="https://gist.github.com/jakebellacera/d81bbf12b99448188f183141e6696817">Link 2</a>
+<h5 style="font-weight: 400; line-height: 1.6">
+    <b><u>More Help</u></b><br> Read about how you can find your YouTube video
+    ID here :
+    <a href=" https://help.tcgplayer.com/hc/en-us/articles/115008106868-Finding-Your-YouTube-Video-ID">Link 1</a>
+    <a href="https://gist.github.com/jakebellacera/d81bbf12b99448188f183141e6696817">Link 2</a>
     <br>
-    Summary Choices acceptable in API are: <span style="font-weight: 300;">["gensim-sum", "spacy-sum", "nltk-sum",
-        "sumy-lsa-sum", "sumy-luhn-sum",
-        "sumy-text-rank-sum"]</span>
+    Summary Choices acceptable in API are: <span style="font-weight: 300;"><b>
+        ["gensim-sum", "spacy-sum", "nltk-sum", "sumy-lsa-sum", "sumy-luhn-sum", "sumy-text-rank-sum"]</b></span>
     <br>
     Percentage could be of your choice, but optimal summaries are within 20 to 30 percent.
 </h5>

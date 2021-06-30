@@ -169,22 +169,6 @@ def create_app():
         # Displaying root.html to the end user
         return render_template('api.html')
 
-    @app.route("/web.css")
-    def styles_root_route():
-        # web.css is stored in templates folder, browsers request it for use inside html page.
-        return send_from_directory(os.path.join(app.root_path, 'templates'), "web.css")
-
-    @app.route("/web.js")
-    def popup_route():
-        # web.js is stored in templates folder, browsers request it for use inside html page.
-        return send_from_directory(os.path.join(app.root_path, 'templates'), "web.js")
-
-    @app.route("/web/yt_icon_rgb.svg")
-    def yt_icon_route():
-        # yt_icon_rgb.svg is stored in static folder, browsers request it for use inside html page.
-        # This SVG Image contains YouTube Logo.
-        return send_from_directory(os.path.join(app.root_path, 'static'), "yt_icon_rgb.svg")
-
     return app
 
 
