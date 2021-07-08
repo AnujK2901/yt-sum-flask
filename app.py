@@ -4,7 +4,7 @@ from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, Vide
 from youtube_transcript_api.formatters import TextFormatter
 
 # Flask Imports
-from flask import Flask, jsonify, request, send_from_directory, render_template
+from flask import Flask, jsonify, request, send_from_directory, render_template, redirect
 
 # NLTK Imports
 import nltk
@@ -169,6 +169,14 @@ def create_app():
         # Displaying root.html to the end user
         return render_template('api.html')
 
+    @app.before_request
+    def enforce_https_in_heroku():
+        if 'DYNO' in os.environ:
+            if request.headers.get('X-Forwarded-Proto') == 'http':
+                url = request.url.replace('http://', 'https://', 1)
+                code = 301
+                return redirect(url, code=code)
+
     return app
 
 
@@ -176,4 +184,4 @@ if __name__ == '__main__':
     # Running Flask Application
     # app.run()
     flask_app = create_app()
-    serve(flask_app, host='0.0.0.0', port=80, debug=True, url_scheme='https')
+    serve(flask_app, host='0.0.0.0', port=80, debug=False, url_scheme='https')
