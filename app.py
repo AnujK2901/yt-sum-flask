@@ -54,49 +54,66 @@ def create_app():
         choice = request.args.get('choice')  # summarization choice
 
         # Checking whether all parameters exist or not
-        if video_id is not None and percent is not None and choice is not None:
-            # every parameter exists here: checking validity of choice
+        if video_id and percent and choice:
+            # Every parameter exists here: checking validity of choice
             choice_list = ["gensim-sum", "spacy-sum", "nltk-sum", "sumy-lsa-sum", "sumy-luhn-sum", "sumy-text-rank-sum"]
             if choice in choice_list:
-                # Choice Correct Proceeding with Transcript Fetch and its Summarization
+                # Choice Correct: Proceeding with Transcript Fetch and its Summarization
                 try:
-                    # Using Formatter to store subtitles properly.
+                    # Using Formatter to store and format received subtitles properly.
                     formatter = TextFormatter()
                     transcript = YouTubeTranscriptApi.get_transcript(video_id)
                     formatted_text = formatter.format_transcript(transcript).replace("\n", " ")
 
-                    # Summarizing Formatted Text based upon the request's choice
-                    if choice == "gensim-sum":
-                        summary = gensim_summarize(formatted_text,
-                                                   percent)  # Gensim Library for TextRank Based Summary.
-                    elif choice == "spacy-sum":
-                        summary = spacy_summarize(formatted_text,
-                                                  percent)  # Spacy Library for frequency-based summary.
-                    elif choice == "nltk-sum":
-                        summary = nltk_summarize(formatted_text,
-                                                 percent)  # NLTK Library used for frequency-based summary.
-                    elif choice == "sumy-lsa-sum":
-                        summary = sumy_lsa_summarize(formatted_text,
-                                                     percent)  # Sumy for extractive summary using LSA.
-                    elif choice == "sumy-luhn-sum":
-                        summary = sumy_luhn_summarize(formatted_text,
-                                                      percent)  # Sumy Library for TF-IDF Based Summary.
-                    elif choice == "sumy-text-rank-sum":
-                        summary = sumy_text_rank_summarize(formatted_text,
-                                                           percent)  # Sumy for Text Rank Based Summary.
-                    else:
-                        summary = None
+                    # Checking the length of sentences in formatted_text string, before summarizing it.
+                    num_sent_text = len(nltk.sent_tokenize(formatted_text))
 
-                    # Returning Result
-                    response_list = [
-                        {'fetched_transcript': formatted_text,
-                         'processed_summary': summary,
-                         'length_original': len(formatted_text),
-                         'length_summary': len(summary)}
-                    ]
-                    return jsonify(success=True,
-                                   message="Subtitles for this video was fetched and summarized successfully.",
-                                   response=response_list), 200
+                    # Condition satisfied for summarization, summarizing the formatted_text based on choice.
+                    if num_sent_text > 1:
+
+                        # Summarizing Formatted Text based upon the request's choice
+                        if choice == "gensim-sum":
+                            summary = gensim_summarize(formatted_text,
+                                                       percent)  # Gensim Library for TextRank Based Summary.
+                        elif choice == "spacy-sum":
+                            summary = spacy_summarize(formatted_text,
+                                                      percent)  # Spacy Library for frequency-based summary.
+                        elif choice == "nltk-sum":
+                            summary = nltk_summarize(formatted_text,
+                                                     percent)  # NLTK Library used for frequency-based summary.
+                        elif choice == "sumy-lsa-sum":
+                            summary = sumy_lsa_summarize(formatted_text,
+                                                         percent)  # Sumy for extractive summary using LSA.
+                        elif choice == "sumy-luhn-sum":
+                            summary = sumy_luhn_summarize(formatted_text,
+                                                          percent)  # Sumy Library for TF-IDF Based Summary.
+                        elif choice == "sumy-text-rank-sum":
+                            summary = sumy_text_rank_summarize(formatted_text,
+                                                               percent)  # Sumy for Text Rank Based Summary.
+                        else:
+                            summary = None
+
+                        # Checking the length of sentences in summary string.
+                        num_sent_summary = len(nltk.sent_tokenize(summary))
+
+                        # Returning Result
+                        response_list = [
+                            {  # 'fetched_transcript': formatted_text,
+                                'processed_summary': summary,
+                                'length_original': len(formatted_text),
+                                'length_summary': len(summary),
+                                'sentence_original': num_sent_text,
+                                'sentence_summary': num_sent_summary}
+                        ]
+                        return jsonify(success=True,
+                                       message="Subtitles for this video was fetched and summarized successfully.",
+                                       response=response_list), 200
+
+                    else:
+                        return jsonify(success=False,
+                                       message="Subtitles are not formatted properly for this video. Unable to "
+                                               "summarize.",
+                                       response=None), 400
 
                 # Catching Exceptions
                 except VideoUnavailable:
@@ -118,6 +135,7 @@ def create_app():
                     return jsonify(success=False, message="NoTranscriptAvailable: No transcripts were found.",
                                    response=None), 400
                 except:
+                    # Prevent server error by returning this message to all other un-expected errors.
                     return jsonify(success=False,
                                    message="Some error occurred."
                                            " Contact the administrator if it is happening too frequently.",
@@ -126,23 +144,28 @@ def create_app():
                 return jsonify(success=False,
                                message="Invalid Choice: Please create your request with correct choice.",
                                response=None), 400
-
-        elif video_id is None:
+        elif video_id is None or len(video_id) <= 0:
             # video_id parameter doesn't exist in the request.
             return jsonify(success=False,
-                           message="No Video ID Passed. "
+                           message="Video ID is not present in the request. "
                                    "Please check that you have added id in your request correctly.",
                            response=None), 400
-        elif percent is None:
+        elif percent is None or len(percent) <= 0:
             # percent parameter doesn't exist.
             return jsonify(success=False,
-                           message="No Percentage Value given in request. "
+                           message="No Percentage value is present in the request. "
                                    "Please check whether your request is correct.",
                            response=None), 400
-        else:
+        elif choice is None or len(choice) <= 0:
             # choice parameter for the summary type doesn't exist here.
             return jsonify(success=False,
-                           message="No Choice given in request. " "Please request along with your choice correctly.",
+                           message="No Choice parameter is present in the request. "
+                                   "Please request along with your choice correctly.",
+                           response=None), 400
+        else:
+            # Some another edge case happened. Return this message for preventing exception throw.
+            return jsonify(success=False,
+                           message="Please request the server with your arguments correctly.",
                            response=None), 400
 
     @app.route('/favicon.ico')
@@ -170,6 +193,7 @@ def create_app():
         return render_template('api.html')
 
     @app.before_request
+    # Before Request Function: We are redirecting any HTTP requests to HTTPS especially on heroku environment.
     def enforce_https_in_heroku():
         if 'DYNO' in os.environ:
             if request.headers.get('X-Forwarded-Proto') == 'http':
