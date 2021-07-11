@@ -53,7 +53,7 @@ function initializeSummary() {
             // https://ytsum.herokuapp.com
             // http://127.0.0.1:5000
             // Fetch request to our server. (GET request with arguments received from popup.html
-            fetch("http://127.0.0.1:5000/summarize/?id=" + video_id +
+            fetch("https://ytsum.herokuapp.com/summarize/?id=" + video_id +
                 "&percent=" + percent + "&choice=" + choice)
                 .then(response => response.json()).then(result => {
                 // Result now contains the response in JSON
@@ -86,8 +86,8 @@ function initializeSummary() {
                     // We failed: Reason is already pushed to UI in process_element (response.result_message has reason)
                     text_out_content_element.innerHTML = "We failed due to above reason.";
                     text_out_content_element.style.textAlign = "center";
-                    // Disabling re-summarize element
-                    re_summarize_element.style.display = "none";
+                    // Enabling re-summarize element
+                    re_summarize_element.style.display = "block";
                 }
             }).catch(error => {
                 // Network issue occurred during fetch probably. Logging and sending result backs.
@@ -96,6 +96,8 @@ function initializeSummary() {
                 // We failed to fetch: Reason is already pushed to UI in process_element (response.result_message has reason)
                 text_out_content_element.innerHTML = "We failed due to above reason.";
                 text_out_content_element.style.textAlign = "center";
+                // Enabling re-summarize element
+                re_summarize_element.style.display = "block";
             })
         } else {
             // Alerting user that they entered wrong URL
