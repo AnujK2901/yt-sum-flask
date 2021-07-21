@@ -97,14 +97,15 @@ def create_app():
                         num_sent_summary = len(nltk.sent_tokenize(summary))
 
                         # Returning Result
-                        response_list = [
-                            {  # 'fetched_transcript': formatted_text,
-                                'processed_summary': summary,
-                                'length_original': len(formatted_text),
-                                'length_summary': len(summary),
-                                'sentence_original': num_sent_text,
-                                'sentence_summary': num_sent_summary}
-                        ]
+                        response_list = {
+                            # 'fetched_transcript': formatted_text,
+                            'processed_summary': summary,
+                            'length_original': len(formatted_text),
+                            'length_summary': len(summary),
+                            'sentence_original': num_sent_text,
+                            'sentence_summary': num_sent_summary
+                        }
+
                         return jsonify(success=True,
                                        message="Subtitles for this video was fetched and summarized successfully.",
                                        response=response_list), 200
