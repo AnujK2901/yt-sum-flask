@@ -172,7 +172,7 @@ def create_app():
     @app.route('/favicon.ico')
     # Favicon is stored in static folder, browsers request it to display along with tab title.
     def favicon():
-        return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
+        return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.png',
                                    mimetype='image/vnd.microsoft.icon')
 
     @app.route('/')
