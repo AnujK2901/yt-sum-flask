@@ -24,7 +24,7 @@ from heapq import nlargest
 
 
 def gensim_summarize(text_content, percent):
-    # TextRank Summarization using Gensim
+    # TextRank Summarization using Gensim Library.
     # Split is false, gensim return strings joined by "\n". if true, gensim will return list
     summary = summarize(text_content, ratio=(int(percent) / 100), split=False).replace("\n", " ")
 
@@ -79,10 +79,10 @@ def spacy_summarize(text_content, percent):
                 else:
                     sentence_scores[sent] += word_frequencies[word.lower()]
 
-    # Finding number of sentences and applying percentage on it: since sumy requires number of lines
+    # Finding number of sentences and applying percentage on it: since we require to show most X% lines in summary.
     select_length = int(len(sentence_token) * (int(percent) / 100))
 
-    # Using nlargest library to get the top x% (Default:30) weighted sentences.
+    # Using nlargest library to get the top x% weighted sentences.
     summary = nlargest(select_length, sentence_scores, key=sentence_scores.get)
 
     # Later joining it to get the final summarized text.
@@ -137,10 +137,10 @@ def nltk_summarize(text_content, percent):
                 else:
                     sentence_scores[sent] += word_frequencies[word.lower()]
 
-    # Finding number of sentences and applying percentage on it: since sumy requires number of lines
+    # Finding number of sentences and applying percentage on it: since we require to show most X% lines in summary.
     select_length = int(len(sentence_token) * (int(percent) / 100))
 
-    # Using nlargest library to get the top x% (Default:30) weighted sentences.
+    # Using nlargest library to get the top x% weighted sentences.
     summary = nlargest(select_length, sentence_scores, key=sentence_scores.get)
 
     # Later joining it to get the final summarized text.
