@@ -68,52 +68,66 @@ def create_app():
                     # Checking the length of sentences in formatted_text string, before summarizing it.
                     num_sent_text = len(nltk.sent_tokenize(formatted_text))
 
-                    # Condition satisfied for summarization, summarizing the formatted_text based on choice.
-                    if num_sent_text > 1:
+                    # Pre-check if the summary will have at least one line .
+                    select_length = int(num_sent_text * (int(percent) / 100))
 
-                        # Summarizing Formatted Text based upon the request's choice
-                        if choice == "gensim-sum":
-                            summary = gensim_summarize(formatted_text,
-                                                       percent)  # Gensim Library for TextRank Based Summary.
-                        elif choice == "spacy-sum":
-                            summary = spacy_summarize(formatted_text,
-                                                      percent)  # Spacy Library for frequency-based summary.
-                        elif choice == "nltk-sum":
-                            summary = nltk_summarize(formatted_text,
-                                                     percent)  # NLTK Library used for frequency-based summary.
-                        elif choice == "sumy-lsa-sum":
-                            summary = sumy_lsa_summarize(formatted_text,
-                                                         percent)  # Sumy for extractive summary using LSA.
-                        elif choice == "sumy-luhn-sum":
-                            summary = sumy_luhn_summarize(formatted_text,
-                                                          percent)  # Sumy Library for TF-IDF Based Summary.
-                        elif choice == "sumy-text-rank-sum":
-                            summary = sumy_text_rank_summarize(formatted_text,
-                                                               percent)  # Sumy for Text Rank Based Summary.
+                    # Summary will have at least 1 line. Proceed to summarize.
+                    if select_length > 0:
+
+                        # Condition satisfied for summarization, summarizing the formatted_text based on choice.
+                        if num_sent_text > 1:
+
+                            # Summarizing Formatted Text based upon the request's choice
+                            if choice == "gensim-sum":
+                                summary = gensim_summarize(formatted_text,
+                                                           percent)  # Gensim Library for TextRank Based Summary.
+                            elif choice == "spacy-sum":
+                                summary = spacy_summarize(formatted_text,
+                                                          percent)  # Spacy Library for frequency-based summary.
+                            elif choice == "nltk-sum":
+                                summary = nltk_summarize(formatted_text,
+                                                         percent)  # NLTK Library used for frequency-based summary.
+                            elif choice == "sumy-lsa-sum":
+                                summary = sumy_lsa_summarize(formatted_text,
+                                                             percent)  # Sumy for extractive summary using LSA.
+                            elif choice == "sumy-luhn-sum":
+                                summary = sumy_luhn_summarize(formatted_text,
+                                                              percent)  # Sumy Library for TF-IDF Based Summary.
+                            elif choice == "sumy-text-rank-sum":
+                                summary = sumy_text_rank_summarize(formatted_text,
+                                                                   percent)  # Sumy for Text Rank Based Summary.
+                            else:
+                                summary = None
+
+                            # Checking the length of sentences in summary string.
+                            num_sent_summary = len(nltk.sent_tokenize(summary))
+
+                            # Returning Result
+                            response_list = {
+                                # 'fetched_transcript': formatted_text,
+                                'processed_summary': summary,
+                                'length_original': len(formatted_text),
+                                'length_summary': len(summary),
+                                'sentence_original': num_sent_text,
+                                'sentence_summary': num_sent_summary
+                            }
+
+                            return jsonify(success=True,
+                                           message="Subtitles for this video was fetched and summarized successfully.",
+                                           response=response_list), 200
+
                         else:
-                            summary = None
-
-                        # Checking the length of sentences in summary string.
-                        num_sent_summary = len(nltk.sent_tokenize(summary))
-
-                        # Returning Result
-                        response_list = {
-                            # 'fetched_transcript': formatted_text,
-                            'processed_summary': summary,
-                            'length_original': len(formatted_text),
-                            'length_summary': len(summary),
-                            'sentence_original': num_sent_text,
-                            'sentence_summary': num_sent_summary
-                        }
-
-                        return jsonify(success=True,
-                                       message="Subtitles for this video was fetched and summarized successfully.",
-                                       response=response_list), 200
+                            return jsonify(success=False,
+                                           message="Subtitles are not formatted properly for this video. Unable to "
+                                                   "summarize. There is a possibility that there is no punctuation in "
+                                                   "subtitles of your video.",
+                                           response=None), 400
 
                     else:
                         return jsonify(success=False,
-                                       message="Subtitles are not formatted properly for this video. Unable to "
-                                               "summarize.",
+                                       message="Number of lines in the subtitles of your video is not "
+                                               "enough to generate a summary. Number of sentences in your video: {}"
+                                       .format(num_sent_text),
                                        response=None), 400
 
                 # Catching Exceptions
