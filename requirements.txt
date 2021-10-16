@@ -6,7 +6,7 @@
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz#egg=en_core_web_sm
 flask==1.1.2
 gensim==3.8.3
-nltk==3.6.2
+nltk==3.6.5
 numpy==1.20.3
 pip==21.2.2
 # python==3.9.5
