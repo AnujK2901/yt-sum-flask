@@ -2,21 +2,21 @@
 # $ conda create --name <env> --file <this file>
 # platform: win-64
 
-# en-core-web-sm==2.3.1
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz#egg=en_core_web_sm
-flask==1.1.2
+# en-core-web-sm==3.2.0
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0.tar.gz
+flask==2.0.3
 gensim==3.8.3
-nltk==3.6.5
-numpy==1.20.3
-pip==21.2.2
+nltk==3.7
+numpy==1.22.3
+pip==22.0.4
 # python==3.9.5
-requests==2.25.1
-scipy==1.6.2
-setuptools==57.0.0
-spacy==2.3.5
-sumy==0.8.1
-urllib3==1.26.5
-waitress==2.0.0
-werkzeug==1.0.1
-wheel==0.36.2
-youtube-transcript-api==0.4.1
+requests==2.27.1
+scipy==1.8.0
+setuptools==60.10.0
+spacy==3.2.3
+sumy==0.9.0
+urllib3==1.26.9
+waitress==2.1.1
+werkzeug==2.0.3
+wheel==0.37.1
+youtube-transcript-api==0.4.3
