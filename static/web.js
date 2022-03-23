@@ -1,6 +1,7 @@
 // Initializing Constants for use
 const url_input = document.getElementById("url_input");
 const summarize_button = document.getElementById("my_button");
+const download_button = document.getElementById("download_button");
 const percent_dropdown = document.getElementById('percent-dropdown');
 const choice_dropdown = document.getElementById('summary-dropdown');
 
@@ -10,6 +11,10 @@ const re_summarize_element = document.getElementById('re_summarize');
 
 // Button Click Listener for InitializeSummary() Function
 summarize_button.addEventListener("click", initializeSummary);
+// Button Click Listener for downloadScript() Function
+download_button.addEventListener("click", downloadScript);
+// Creating a dictionary to store download related info once the summary processing is complete.
+const download_info = {script: "", video_id: "", video_percent: "", video_algo: ""}
 
 // Making Summarize button disabled on start
 summarize_button.disabled = true;
@@ -69,6 +74,13 @@ function initializeSummary() {
                         + "<br>The processed summary has <b>" + response_json.length_summary + "</b> characters in <b>" + response_json.sentence_summary + "</b> sentences."
                         + "</br><br>";
 
+                    // Populating the globally created dictionary
+                    download_info.script = response_json.processed_summary
+                    download_info.video_id = video_id
+                    download_info.video_algo = choice.replaceAll('-', '_')
+                    download_info.video_percent = percent
+                    // Displaying download button
+                    download_button.style.display = "block";
                     // Text Beautification: Aligning Text to be justified
                     text_out_content_element.style.textAlign = "justify";
                     text_out_content_element.style.textJustify = "inter-word";
@@ -122,4 +134,22 @@ function parse_choice(choice_index) {
         case 6:
             return "sumy-text-rank-sum";
     }
+}
+
+function downloadScript() {
+    // Creating hyperlink element with tagName "a"
+    var element = document.createElement('a');
+    // Setting HREF to the script text
+    element.setAttribute('href', 'data:application/octet-stream; data:text/plain;charset=utf-8,' +
+        encodeURIComponent(download_info.script));
+    // Setting download file name in the format "script_videoID_algo_percent.txt"
+    element.setAttribute('download', "script_" +
+        download_info.video_id + "_" + download_info.video_algo + "_" + download_info.video_percent + ".txt");
+    // Making the hyperlink invisible and appending it to the body
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    // Clicking hyperlink to download script into text file and removing the invisible hyperlink.
+    element.click();
+    document.body.removeChild(element);
 }
