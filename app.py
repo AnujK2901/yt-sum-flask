@@ -149,8 +149,9 @@ def create_app():
                 except NoTranscriptFound:
                     return jsonify(success=False, message="NoTranscriptAvailable: No transcripts were found.",
                                    response=None), 400
-                except:
+                except Exception as e:
                     # Prevent server error by returning this message to all other un-expected errors.
+                    print(e)
                     return jsonify(success=False,
                                    message="Some error occurred."
                                            " Contact the administrator if it is happening too frequently.",
