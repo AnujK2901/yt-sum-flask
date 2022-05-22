@@ -1,4 +1,8 @@
 # YouTube Transcript Summarizer: Flask Back-End Repository
+### <i><b>Caution:</b> There is no open source license attached to this repository, which means that you can not copy/make changes without the author's permission. This repository is only for any future improvements or suggestions if someone wants to add to this project.
+### So, if you are planning to use this repository for your own final year minor/major projects, then, unfortunately, you can not use this repository to submit because it was already submitted by me in the first place. This repository is only made available by me for any improvements you want to add or suggest. If I get to know that someone is using this repository as their project, then, unfortunately I would have to report this "unauthorised copying/project already built scenario" to your university/college.
+### So, kindly do not fork this repository if you want to use it as your project. This repository is the author's own intellectual property, and it is only made available for the purpose of knowledge-sharing; and not unauthorised ownership.</i>
+##
 ### This back-end also hosts the web version of the online summarizer [here](https://ytsum.herokuapp.com/web/).
 **YouTube Video Transcript Summarization over Flask:** This back-end uses Flask framework to receive API calls from the client and then respond with the summarized text response. This API can work only on those YouTube videos which have well-formatted closed captions in it. The same backend also hosts a web version of the Summarizer to make those API calls in simple way and show the output within the webpage.
 

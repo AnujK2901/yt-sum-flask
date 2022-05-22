@@ -11,6 +11,7 @@ import nltk
 
 # Other Imports
 import os
+import sys
 
 # Summarizer Import (Our Another File: summarizer.py)
 from summarizer import gensim_summarize, spacy_summarize, nltk_summarize, sumy_lsa_summarize, sumy_luhn_summarize, \
@@ -152,6 +153,7 @@ def create_app():
                 except Exception as e:
                     # Prevent server error by returning this message to all other un-expected errors.
                     print(e)
+                    sys.stdout.flush()
                     return jsonify(success=False,
                                    message="Some error occurred."
                                            " Contact the administrator if it is happening too frequently.",
