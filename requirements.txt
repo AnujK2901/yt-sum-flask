@@ -17,6 +17,6 @@ spacy==3.2.4
 sumy==0.9.0
 urllib3==1.26.9
 waitress==2.1.2
-werkzeug==2.1.1
+werkzeug==2.2.3
 wheel==0.38.1
 youtube-transcript-api==0.4.4
