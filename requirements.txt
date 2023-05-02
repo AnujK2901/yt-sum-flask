@@ -4,7 +4,7 @@
 
 # en-core-web-sm==3.2.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0.tar.gz
-flask==2.1.1
+flask==2.3.2
 gensim==3.8.3
 nltk==3.7
 numpy==1.22.3
